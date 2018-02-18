@@ -1,4 +1,4 @@
-def get_training_data():
+def training_data():
     """get all of the available set data
 
     Returns: a list of record data. Each element in the list contains 2 values. The first value is a 3 value tuple,
@@ -23,18 +23,24 @@ def get_training_data():
     ]
 
 
-def P(x, y):
-    """the conditional probability """
-    return 5
+def P(x, y, i=None):
+    """P(x|y) Determine the conditional probability of x given class y. Is """
+    if i is None:
+        # return the probability of P(x|y) where x is a vector of all attributes for a record
+        return float(P(x, y, 0) * P(x, y, 1) * P(x, y, 2))  # TODO: implement continuous probablity
+    else:
+        # return the probability of P(x|y) where x is a single attribute
+        return float(len([X[i] for X, Y in training_data() if X[i] is x[i] and Y is y])
+                     / len([_ for _, Y in training_data() if Y is y]))
 
 
-def P(y):
-    """Determine the probability of a given class value.
+def posterior_prob(y):
+    """P(y) Determine the probability of a given class value.
 
     Input: y...the class value (boolean value)
 
     Returns: (float) the likelihood that any particular set of attributes will correspond to the provided class."""
-    return len([x[0] for x in get_training_data() if x[1] is y]) / len(get_training_data())
+    return float(len([X for X, Y in training_data() if Y is y]) / len(training_data()))
 
 
 def predict_class(x):
@@ -63,4 +69,5 @@ def predict_class(x):
         return
     else:
         # perform prediction
-        return True if P(x, True) > P(x, False) else False
+        # TODO: smoothing??
+        return posterior_prob(True) * P(x, True) >= posterior_prob(False) * P(x, False)
