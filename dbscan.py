@@ -5,6 +5,23 @@
 # DBSCAN
 # May 1, 2018
 #
+# Overview: The following library implements a standard DBSCAN algorithm based on the requirements
+# of Project 3 for CS5342 (Spring 2018)
+#
+# Random Seed:
+# The random selection of generating the data points used for clustering can be provided with a seed in order to
+# be able to reproduce runs.
+#
+# Report Parameters:
+# Seed = 2 for all experiments for which the result are provided in this report.
+# Eps = this value varied for each experiment. See main report for details on the value for each experiment was
+#   determined
+# MinPts = 4 was used for each experiment, based on the recommendations provided in the text book for 2 dimensional
+#   data points.
+#
+# Report generation:
+# several functions in this library were designed specifically to generate file and data to standard output in order
+# to generate content used in the provided report for each experiment.
 import csv
 import random
 import math
