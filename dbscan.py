@@ -90,12 +90,12 @@ def label_core_neighbors(neighbors, labeled, clusters, c, db, eps, min_pts):
             clusters[n] = c
 
         if n not in labeled:
-            labeled[n] = 'C'
+            neighbors_of_n = find_neighbors(n, db, eps)
+            labeled[n] = 'C' if len(neighbors_of_n) >= min_pts else 'B'
             clusters[n] = c
 
             # if any of this core point's neighbors is another core point, label this neighbor's neighbors, as well
-            neighbors_of_n = find_neighbors(n, db, eps)
-            if len(neighbors_of_n) >= min_pts:
+            if labeled[n] == 'C':
                 label_core_neighbors(neighbors_of_n, labeled, clusters, c, db, eps, min_pts)
 
 
@@ -218,4 +218,3 @@ def print_results(labeled, clusters):
     if len(labeled) > len(clusters):
         print('\n\nNoise Points:\n')
         [print(p) for p, label in sorted(labeled.items()) if label == 'N']
-
